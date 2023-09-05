@@ -4,8 +4,20 @@ import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Link from "next/link";
 import Date from "../components/date";
+import { useState } from "react";
+import Post from "../components/Post"
+import Modal from "../components/Modal"
 
 export default function Home({ allPostsData }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <Layout home>
       <Head>
@@ -32,6 +44,13 @@ export default function Home({ allPostsData }) {
           ))}
         </ul>
       </section>
+      <button onClick={openModal}>モーダルを開く</button>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <Post title="サンプルポスト"
+          imageUrl="https://example.com/sample-image.jpg"
+          youtubeEmbedUrl="https://www.youtube.com/embed/VIDEO_ID"
+          description="これはサンプルのポストです。"/>
+      </Modal>
     </Layout>
   );
 }
